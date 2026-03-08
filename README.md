@@ -2,18 +2,24 @@
 
 This guide walks you through creating an account, logging in, and generating an API key to access the SovaVoice Speech-to-Text API.
 
-> **Windows PowerShell:** Use `curl.exe` instead of `curl` (PowerShell's built-in `curl` is an alias for `Invoke-WebRequest` and has different syntax).
-
 ---
 
 ## Step 1 — Register
 
 Send your email address to create an account. You will receive a verification email.
 
+**bash / macOS / Linux**
 ```bash
 curl -X POST https://identity.sovavoice.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email": "you@example.com"}'
+```
+
+**Windows PowerShell**
+```powershell
+curl.exe -X POST https://identity.sovavoice.com/api/auth/register `
+  -H "Content-Type: application/json" `
+  -d "{\"email\": \"you@example.com\"}"
 ```
 
 **Response**
@@ -34,8 +40,14 @@ Click the link in the verification email. It will redirect you to the dashboard 
 
 The verification endpoint returns a `setup_token`:
 
+**bash**
 ```bash
 curl https://identity.sovavoice.com/api/auth/verify/YOUR_VERIFICATION_TOKEN
+```
+
+**PowerShell**
+```powershell
+curl.exe https://identity.sovavoice.com/api/auth/verify/YOUR_VERIFICATION_TOKEN
 ```
 
 ```json
@@ -44,10 +56,18 @@ curl https://identity.sovavoice.com/api/auth/verify/YOUR_VERIFICATION_TOKEN
 
 Use it to set your password:
 
+**bash**
 ```bash
 curl -X POST https://identity.sovavoice.com/api/auth/setup-password/YOUR_SETUP_TOKEN \
   -H "Content-Type: application/json" \
   -d '{"password": "your-secure-password"}'
+```
+
+**PowerShell**
+```powershell
+curl.exe -X POST https://identity.sovavoice.com/api/auth/setup-password/YOUR_SETUP_TOKEN `
+  -H "Content-Type: application/json" `
+  -d "{\"password\": \"your-secure-password\"}"
 ```
 
 </details>
@@ -56,9 +76,17 @@ curl -X POST https://identity.sovavoice.com/api/auth/setup-password/YOUR_SETUP_T
 
 ## Step 3 — Log in
 
+**bash**
 ```bash
 curl -X POST https://identity.sovavoice.com/api/auth/login \
   -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=you@example.com&password=your-secure-password"
+```
+
+**PowerShell**
+```powershell
+curl.exe -X POST https://identity.sovavoice.com/api/auth/login `
+  -H "Content-Type: application/x-www-form-urlencoded" `
   -d "username=you@example.com&password=your-secure-password"
 ```
 
@@ -78,11 +106,20 @@ Save the `access_token` — you'll need it for the next step.
 
 Use the JWT from Step 3 to create a persistent API key for the STT service.
 
+**bash**
 ```bash
 curl -X POST https://api.sovavoice.com/api/keys \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name": "My App"}'
+```
+
+**PowerShell**
+```powershell
+curl.exe -X POST https://api.sovavoice.com/api/keys `
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" `
+  -H "Content-Type: application/json" `
+  -d "{\"name\": \"My App\"}"
 ```
 
 **Response**
@@ -108,8 +145,15 @@ You now have an API key (`stt_live_...`). Use it to [transcribe audio](../sovavo
 <details>
 <summary>List all API keys</summary>
 
+**bash**
 ```bash
 curl https://api.sovavoice.com/api/keys/list \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**PowerShell**
+```powershell
+curl.exe https://api.sovavoice.com/api/keys/list `
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -118,8 +162,15 @@ curl https://api.sovavoice.com/api/keys/list \
 <details>
 <summary>Deactivate an API key</summary>
 
+**bash**
 ```bash
 curl -X DELETE https://api.sovavoice.com/api/keys/KEY_ID \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**PowerShell**
+```powershell
+curl.exe -X DELETE https://api.sovavoice.com/api/keys/KEY_ID `
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -128,8 +179,15 @@ curl -X DELETE https://api.sovavoice.com/api/keys/KEY_ID \
 <details>
 <summary>Restore a deactivated key</summary>
 
+**bash**
 ```bash
 curl -X POST https://api.sovavoice.com/api/keys/KEY_ID/restore \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**PowerShell**
+```powershell
+curl.exe -X POST https://api.sovavoice.com/api/keys/KEY_ID/restore `
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -142,18 +200,34 @@ curl -X POST https://api.sovavoice.com/api/keys/KEY_ID/restore \
 <details>
 <summary>Forgot your password?</summary>
 
+**bash**
 ```bash
 curl -X POST https://identity.sovavoice.com/api/auth/forgot-password \
   -H "Content-Type: application/json" \
   -d '{"email": "you@example.com"}'
 ```
 
+**PowerShell**
+```powershell
+curl.exe -X POST https://identity.sovavoice.com/api/auth/forgot-password `
+  -H "Content-Type: application/json" `
+  -d "{\"email\": \"you@example.com\"}"
+```
+
 You will receive a reset link by email. Then:
 
+**bash**
 ```bash
 curl -X POST https://identity.sovavoice.com/api/auth/reset-password/YOUR_RESET_TOKEN \
   -H "Content-Type: application/json" \
   -d '{"password": "new-secure-password"}'
+```
+
+**PowerShell**
+```powershell
+curl.exe -X POST https://identity.sovavoice.com/api/auth/reset-password/YOUR_RESET_TOKEN `
+  -H "Content-Type: application/json" `
+  -d "{\"password\": \"new-secure-password\"}"
 ```
 
 </details>
