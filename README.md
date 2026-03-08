@@ -11,7 +11,7 @@ This guide walks you through creating an account, logging in, and generating an 
 Send your email address to create an account. You will receive a verification email.
 
 ```bash
-curl -X POST https://auth.sovavoice.com/auth/register \
+curl -X POST https://identity.sovavoice.com/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email": "you@example.com"}'
 ```
@@ -35,7 +35,7 @@ Click the link in the verification email. It will redirect you to the dashboard 
 The verification endpoint returns a `setup_token`:
 
 ```bash
-curl https://auth.sovavoice.com/auth/verify/YOUR_VERIFICATION_TOKEN
+curl https://identity.sovavoice.com/auth/verify/YOUR_VERIFICATION_TOKEN
 ```
 
 ```json
@@ -45,7 +45,7 @@ curl https://auth.sovavoice.com/auth/verify/YOUR_VERIFICATION_TOKEN
 Use it to set your password:
 
 ```bash
-curl -X POST https://auth.sovavoice.com/auth/setup-password/YOUR_SETUP_TOKEN \
+curl -X POST https://identity.sovavoice.com/auth/setup-password/YOUR_SETUP_TOKEN \
   -H "Content-Type: application/json" \
   -d '{"password": "your-secure-password"}'
 ```
@@ -57,7 +57,7 @@ curl -X POST https://auth.sovavoice.com/auth/setup-password/YOUR_SETUP_TOKEN \
 ## Step 3 — Log in
 
 ```bash
-curl -X POST https://auth.sovavoice.com/auth/login \
+curl -X POST https://identity.sovavoice.com/auth/login \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "username=you@example.com&password=your-secure-password"
 ```
@@ -143,7 +143,7 @@ curl -X POST https://api.sovavoice.com/api/keys/KEY_ID/restore \
 <summary>Forgot your password?</summary>
 
 ```bash
-curl -X POST https://auth.sovavoice.com/auth/forgot-password \
+curl -X POST https://identity.sovavoice.com/auth/forgot-password \
   -H "Content-Type: application/json" \
   -d '{"email": "you@example.com"}'
 ```
@@ -151,7 +151,7 @@ curl -X POST https://auth.sovavoice.com/auth/forgot-password \
 You will receive a reset link by email. Then:
 
 ```bash
-curl -X POST https://auth.sovavoice.com/auth/reset-password/YOUR_RESET_TOKEN \
+curl -X POST https://identity.sovavoice.com/auth/reset-password/YOUR_RESET_TOKEN \
   -H "Content-Type: application/json" \
   -d '{"password": "new-secure-password"}'
 ```
